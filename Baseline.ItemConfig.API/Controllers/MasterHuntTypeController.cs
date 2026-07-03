@@ -31,11 +31,10 @@ namespace Baseline.ItemConfig.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMasterHuntType([FromBody] CreateMasterHuntTypeRequest request)
         {
-            var id = request.Id == Guid.Empty ? Guid.NewGuid() : request.Id;
-            var result = await _mhtService.CreateMasterHuntType(id, request.Name);
+            var result = await _mhtService.CreateMasterHuntType(request.Name);
             return CreatedAtAction(nameof(GetMasterHuntType), new { id = result.Id }, result);
         }
 
-        public record CreateMasterHuntTypeRequest(Guid Id, string Name);
+        public record CreateMasterHuntTypeRequest(string Name);
     }
 }

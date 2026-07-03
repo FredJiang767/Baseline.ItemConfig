@@ -17,7 +17,7 @@ public static class DbInitializer
 
         var items = new List<MasterHuntType>
         {
-            MasterHuntType.Create(Guid.NewGuid(), "Big Game")
+            MasterHuntType.Create("Big Game")
         };
 
         context.MasterHuntTypes.AddRange(items);

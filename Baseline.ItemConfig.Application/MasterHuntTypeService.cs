@@ -2,6 +2,7 @@
 using Baseline.ItemConfig.Domain.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
 using Baseline.ItemConfig.Infrastructure;
+using Baseline.ItemConfig.Domain;
 
 namespace Baseline.ItemConfig.Application
 {
@@ -28,9 +29,9 @@ namespace Baseline.ItemConfig.Application
             return item == null ? null : new MasterHuntTypeReadDto(item.Id, item.Name);
         }
 
-        public async Task<MasterHuntTypeReadDto> CreateMasterHuntType(Guid id, string name)
+        public async Task<MasterHuntTypeReadDto> CreateMasterHuntType(string name)
         {
-            var item = Domain.MasterHuntType.Create(id, name);
+            var item = MasterHuntType.Create(name);
             _mhtRepository.Add(item);
             await _uow.SaveChangesAsync();
             return new MasterHuntTypeReadDto(item.Id, item.Name);
