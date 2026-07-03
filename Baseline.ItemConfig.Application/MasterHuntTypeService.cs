@@ -1,0 +1,39 @@
+﻿using Baseline.Common.Uow.Abstractions;
+using Baseline.ItemConfig.Domain.Abstractions;
+using Baseline.ItemConfig.Application.DTOs;
+using Baseline.ItemConfig.Infrastructure;
+
+namespace Baseline.ItemConfig.Application
+{
+    public class MasterHuntTypeService
+    {
+        private readonly IUnitOfWork<ItemConfigDbContext> _uow;
+        private readonly IMasterHuntTypeRepository _mhtRepository;
+
+        public MasterHuntTypeService(IUnitOfWork<ItemConfigDbContext> uow, IMasterHuntTypeRepository mhtRepository)
+        {
+            _uow = uow;
+            _mhtRepository = mhtRepository;
+        }
+
+        public async Task<IEnumerable<MasterHuntTypeReadDto>> GetMasterHuntTypes()
+        {
+            var items = await _mhtRepository.GetAll();
+            return items.Select(x => new MasterHuntTypeReadDto(x.Id, x.Name));
+        }
+
+        public async Task<MasterHuntTypeReadDto?> GetMasterHuntType(Guid id)
+        {
+            var item = await _mhtRepository.GetAsync(u => u.Id == id);
+            return item == null ? null : new MasterHuntTypeReadDto(item.Id, item.Name);
+        }
+
+        public async Task<MasterHuntTypeReadDto> CreateMasterHuntType(Guid id, string name)
+        {
+            var item = Domain.MasterHuntType.Create(id, name);
+            _mhtRepository.Add(item);
+            await _uow.SaveChangesAsync();
+            return new MasterHuntTypeReadDto(item.Id, item.Name);
+        }
+    }
+}

@@ -1,0 +1,15 @@
+trigger:
+  - main
+
+resources:
+  repositories:
+    - repository: Baseline.PipelineTemplate
+      name: Baseline.PipelineTemplate
+      ref: refs/heads/main
+      type: git
+
+extends:
+  template: app.template.yaml@Baseline.PipelineTemplate
+  parameters:
+    containerEnvVars: ASPNETCORE_ENVIRONMENT="Development" ConnectionStrings__UserDb="Server=hello-container-dev.database.windows.net;Initial Catalog=UserDb;Persist Security Info=False;User ID=UTAPP;Password=Yses%(UDD7396PO;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    service: user

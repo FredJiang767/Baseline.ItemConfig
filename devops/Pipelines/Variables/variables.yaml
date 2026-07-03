@@ -1,0 +1,2 @@
+variables:
+  CosmosDB: AccountEndpoint=https://hello-container-dev.documents.azure.com:443/;AccountKey=krV16S3oreH7CuykNScHDuXrpelGq7omzge8fssEvW2D1cy5Nyg7QlcVlCbAkQzvGe07nlZJSTN4ACDbdVJMqw==;
