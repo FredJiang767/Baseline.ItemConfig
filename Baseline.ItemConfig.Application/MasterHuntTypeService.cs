@@ -17,24 +17,25 @@ namespace Baseline.ItemConfig.Application
             _mhtRepository = mhtRepository;
         }
 
-        public async Task<IEnumerable<MasterHuntTypeReadDto>> GetMasterHuntTypes()
+        public async Task<IEnumerable<MasterHuntTypeReadDto>> GetAll()
         {
             var items = await _mhtRepository.GetAll();
             return items.Select(x => new MasterHuntTypeReadDto(x.Id, x.Name));
         }
 
-        public async Task<MasterHuntTypeReadDto?> GetMasterHuntType(Guid id)
-        {
-            var item = await _mhtRepository.GetAsync(u => u.Id == id);
-            return item == null ? null : new MasterHuntTypeReadDto(item.Id, item.Name);
-        }
-
-        public async Task<MasterHuntTypeReadDto> CreateMasterHuntType(string name)
+        public async Task<MasterHuntTypeReadDto> Create(string name)
         {
             var item = MasterHuntType.Create(name);
             _mhtRepository.Add(item);
             await _uow.SaveChangesAsync();
             return new MasterHuntTypeReadDto(item.Id, item.Name);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            await _mhtRepository.DeleteById(id);
+            await _uow.SaveChangesAsync();
+            return true;
         }
     }
 }

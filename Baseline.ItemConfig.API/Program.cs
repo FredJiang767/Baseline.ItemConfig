@@ -12,6 +12,11 @@ builder.Services.AddControllers(o => o.Filters.Add(new NotFoundResultFilterAttri
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 builder.Services.AddMasterHuntTypeServices();
 builder.Services.AddDbContext<ItemConfigDbContext>(options =>
 {
@@ -20,6 +25,7 @@ builder.Services.AddDbContext<ItemConfigDbContext>(options =>
 });
 
 var app = builder.Build();
+app.UseCors();
 
 var isContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
 

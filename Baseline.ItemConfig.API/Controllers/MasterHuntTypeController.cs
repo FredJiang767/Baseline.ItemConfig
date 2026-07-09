@@ -17,22 +17,22 @@ namespace Baseline.ItemConfig.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMasterHuntTypes()
         {
-            var result = await _mhtService.GetMasterHuntTypes();
-            return Ok(result);
-        }
-
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetMasterHuntType(Guid id)
-        {
-            var result = await _mhtService.GetMasterHuntType(id);
+            var result = await _mhtService.GetAll();
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateMasterHuntType([FromBody] CreateMasterHuntTypeRequest request)
         {
-            var result = await _mhtService.CreateMasterHuntType(request.Name);
-            return CreatedAtAction(nameof(GetMasterHuntType), new { id = result.Id }, result);
+            var result = await _mhtService.Create(request.Name);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteMasterHuntType(Guid id)
+        {
+            await _mhtService.Delete(id);
+            return NoContent();
         }
 
         public record CreateMasterHuntTypeRequest(string Name);
