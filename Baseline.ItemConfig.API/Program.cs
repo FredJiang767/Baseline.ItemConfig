@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-builder.Services.AddMasterHuntTypeServices();
+builder.Services.AddServices();
 builder.Services.AddDbContext<ItemConfigDbContext>(options =>
 {
     var cs = "Data Source=localhost,1433;Initial Catalog=ItemConfigDb;User ID=sa;Password=YourStrong!Pass123;Encrypt=True;TrustServerCertificate=True"; // builder.Configuration.GetConnectionString("ItemConfigDb");

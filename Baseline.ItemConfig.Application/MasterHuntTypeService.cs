@@ -1,17 +1,15 @@
 ﻿using Baseline.Common.Uow.Abstractions;
-using Baseline.ItemConfig.Domain.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
-using Baseline.ItemConfig.Infrastructure;
 using Baseline.ItemConfig.Domain;
 
 namespace Baseline.ItemConfig.Application
 {
     public class MasterHuntTypeService
     {
-        private readonly IUnitOfWork<ItemConfigDbContext> _uow;
-        private readonly IMasterHuntTypeRepository _mhtRepository;
+        private readonly IUnitOfWork _uow;
+        private readonly IRepository<MasterHuntType> _mhtRepository;
 
-        public MasterHuntTypeService(IUnitOfWork<ItemConfigDbContext> uow, IMasterHuntTypeRepository mhtRepository)
+        public MasterHuntTypeService(IUnitOfWork uow, IRepository<MasterHuntType> mhtRepository)
         {
             _uow = uow;
             _mhtRepository = mhtRepository;
