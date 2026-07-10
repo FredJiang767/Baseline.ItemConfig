@@ -9,4 +9,5 @@ public class MasterHuntType
 
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public ICollection<HuntTypeLicenseYear> HuntTypeLicenseYears { get; set; } = new List<HuntTypeLicenseYear>();
 }

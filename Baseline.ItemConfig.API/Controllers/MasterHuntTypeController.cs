@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Baseline.ItemConfig.Application;
+using Baseline.ItemConfig.API.Models.Requests;
 
 namespace Baseline.ItemConfig.API.Controllers
 {
@@ -34,7 +35,5 @@ namespace Baseline.ItemConfig.API.Controllers
             await _mhtService.Delete(id);
             return NoContent();
         }
-
-        public record CreateMasterHuntTypeRequest(string Name);
     }
 }

@@ -7,6 +7,7 @@ namespace Baseline.ItemConfig.Infrastructure
     public class ItemConfigDbContext : BaseDbContext
     {
         public DbSet<MasterHuntType> MasterHuntTypes => Set<MasterHuntType>();
+        public DbSet<HuntTypeLicenseYear> HuntTypeLicenseYears => Set<HuntTypeLicenseYear>();
 
         public ItemConfigDbContext(DbContextOptions<ItemConfigDbContext> options) : base(options)
         {
@@ -16,6 +17,7 @@ namespace Baseline.ItemConfig.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ItemConfigDbContext).Assembly);
         }
     }
 }

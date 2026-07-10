@@ -5,31 +5,15 @@ using Baseline.ItemConfig.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers(o => o.Filters.Add(new NotFoundResultFilterAttribute()));
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
-
 builder.Services.AddServices();
-builder.Services.AddDbContext<ItemConfigDbContext>(options =>
-{
-    var cs = "Data Source=localhost,1433;Initial Catalog=ItemConfigDb;User ID=sa;Password=YourStrong!Pass123;Encrypt=True;TrustServerCertificate=True"; // builder.Configuration.GetConnectionString("ItemConfigDb");
-    options.UseSqlServer(cs);
-});
 
 var app = builder.Build();
 app.UseCors();
 
 var isContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -45,7 +29,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Ensure database is migrated and seeded on startup
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
