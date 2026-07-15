@@ -12,6 +12,7 @@ namespace Baseline.ItemConfig.Infrastructure
         public DbSet<OutletType> OutletTypes => Set<OutletType>();
         public DbSet<OutletTypeItem> OutletTypeItems => Set<OutletTypeItem>();
         public DbSet<Item> Items => Set<Item>();
+        public DbSet<RootItemNumber> RootItemNumbers => Set<RootItemNumber>();
         public DbSet<UiTab> UiTabs => Set<UiTab>();
         public DbSet<UiSubTab> UiSubTabs => Set<UiSubTab>();
 

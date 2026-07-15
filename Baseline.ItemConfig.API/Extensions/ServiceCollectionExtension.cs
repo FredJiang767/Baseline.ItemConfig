@@ -29,6 +29,7 @@ namespace Baseline.ItemConfig.API.Extensions
             services.AddScoped<OutletService>();
             services.AddScoped<UiTabService>();
             services.AddScoped<UiSubTabService>();
+            services.AddScoped<RootItemNumberService>();
             services.AddScoped<ItemService>();
             services.AddScoped<OutletTypeItemService>();
             return services;

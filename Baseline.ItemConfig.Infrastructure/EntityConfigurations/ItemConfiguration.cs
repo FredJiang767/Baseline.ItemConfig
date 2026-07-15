@@ -13,6 +13,12 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.HasKey(x => x.ItemId);
         builder.Property(x => x.ItemYear).IsRequired();
         builder.Property(x => x.ItemNumber).IsRequired();
+        builder.Property(x => x.RootItemNumberId).IsRequired();
+
+        builder.HasOne(x => x.RootItemNumber)
+            .WithMany(x => x.Items)
+            .HasForeignKey(x => x.RootItemNumberId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.UiSubTab)
             .WithMany(x => x.Items)

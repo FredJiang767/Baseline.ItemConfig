@@ -25,7 +25,12 @@ public class ItemController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateItem([FromBody] CreateItemRequest request)
     {
-        var result = await _itemService.Create(request.ItemYear, request.ItemNumber, request.UiSubTabId, request.UiTabId);
+        var result = await _itemService.Create(
+            request.ItemYear, 
+            request.ItemNumber, 
+            request.RootItemNumberId, 
+            request.UiTabId, 
+            request.UiSubTabId);
         return Ok(result);
     }
 
