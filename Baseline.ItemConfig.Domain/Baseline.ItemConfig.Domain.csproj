@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Baseline.Common\Baseline.Common\Baseline.Common.csproj" />
+    <PackageReference Include="Baseline.Common" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
