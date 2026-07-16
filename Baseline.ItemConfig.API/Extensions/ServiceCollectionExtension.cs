@@ -8,7 +8,7 @@ namespace Baseline.ItemConfig.API.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddServices(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddCors(options =>
             {
@@ -17,7 +17,7 @@ namespace Baseline.ItemConfig.API.Extensions
 
             services.AddDbContext<ItemConfigDbContext>(options =>
             {
-                var cs = "Data Source=localhost,1433;Initial Catalog=ItemConfigDb;User ID=sa;Password=YourStrong!Pass123;Encrypt=True;TrustServerCertificate=True"; // builder.Configuration.GetConnectionString("ItemConfigDb");
+                var cs = config.GetConnectionString("ItemConfigDb");
                 options.UseSqlServer(cs);
             });
 
