@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Baseline.Facade\Baseline.Common\Baseline.Common.csproj" />
+    <ProjectReference Include="..\..\Baseline.Common\Baseline.Common\Baseline.Common.csproj" />
     <ProjectReference Include="..\Baseline.ItemConfig.Domain\Baseline.ItemConfig.Domain.csproj" />
     <ProjectReference Include="..\Baseline.ItemConfig.Infrastructure\Baseline.ItemConfig.Infrastructure.csproj" />
   </ItemGroup>
