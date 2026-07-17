@@ -1,6 +1,6 @@
 using Baseline.ItemConfig.API.Extensions;
 using Baseline.ItemConfig.API.Fitlers;
-using Microsoft.EntityFrameworkCore;
+using Baseline.ItemConfig.API.Infrastructure;
 using Baseline.ItemConfig.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,21 +29,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<ItemConfigDbContext>();
-        context.Database.Migrate();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-        throw;
-    }
-}
+DbStartupHelper.MigrateAndSeedDb<ItemConfigDbContext>(app.Services, DbInitializer.Initialize);
 
 app.Run();

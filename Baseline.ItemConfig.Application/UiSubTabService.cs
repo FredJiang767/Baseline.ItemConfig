@@ -46,4 +46,12 @@ public class UiSubTabService
         await _uow.SaveChangesAsync();
         return true;
     }
+
+    public async Task<IEnumerable<UiSubTabReadDto>> GetSubTabsByTabId(Guid uiTabId)
+    {
+        var items = await _uiSubTabRepository.GetAll();
+        return items
+            .Where(x => x.UiTabId == uiTabId)
+            .Select(x => new UiSubTabReadDto(x.UiSubTabId, x.Name, x.UiTabId));
+    }
 }

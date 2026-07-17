@@ -69,4 +69,12 @@ public class ItemService
         await _uow.SaveChangesAsync();
         return true;
     }
+
+    public async Task<IEnumerable<ItemReadDto>> GetItemsBySubTabId(Guid uiSubTabId)
+    {
+        var items = await _itemRepository.GetAll();
+        return items
+            .Where(x => x.UiSubTabId == uiSubTabId)
+            .Select(x => new ItemReadDto(x.ItemId, x.ItemYear, x.ItemNumber, x.RootItemNumberId, x.UiSubTabId, x.UiTabId));
+    }
 }
