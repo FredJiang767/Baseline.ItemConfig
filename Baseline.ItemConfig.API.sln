@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baseline.ItemConfig.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baseline.ItemConfig.Infrastructure", "Baseline.ItemConfig.Infrastructure\Baseline.ItemConfig.Infrastructure.csproj", "{0C08184E-B1A0-1DC3-7DB6-3113A04C9EDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baseline.ItemConfig.UnitTests", "Baseline.ItemConfig.UnitTests\Baseline.ItemConfig.UnitTests.csproj", "{E88F7606-F03C-498D-BB51-2826DAE411FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0C08184E-B1A0-1DC3-7DB6-3113A04C9EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C08184E-B1A0-1DC3-7DB6-3113A04C9EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C08184E-B1A0-1DC3-7DB6-3113A04C9EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E88F7606-F03C-498D-BB51-2826DAE411FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E88F7606-F03C-498D-BB51-2826DAE411FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E88F7606-F03C-498D-BB51-2826DAE411FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E88F7606-F03C-498D-BB51-2826DAE411FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
