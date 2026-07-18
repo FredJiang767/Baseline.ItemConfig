@@ -25,7 +25,7 @@ public class RootItemNumberController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateRootItemNumber([FromBody] CreateRootItemNumberRequest request)
     {
-        var result = await _rootItemNumberService.Create(request.RootItemNumber, request.RootItemDescription);
+        var result = await _rootItemNumberService.Create(request.Number, request.Description);
         return Ok(result);
     }
 

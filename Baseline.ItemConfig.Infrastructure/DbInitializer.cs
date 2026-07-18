@@ -35,41 +35,53 @@ public static class DbInitializer
             });
         }
 
+        var tabApplication = UiTab.Create("Applications");
+        var tabPackage = UiTab.Create("Package");
 
-        var tab = UiTab.Create("Applications");
-        var subTab1 = UiSubTab.Create("GENERAL-SEASON", tab.UiTabId);
-        var subTab2 = UiSubTab.Create("LIMITED-ENTRY", tab.UiTabId);
+        var appTab1 = UiSubTab.Create("GENERAL-SEASON", tabApplication.UiTabId);
+        var appTab2 = UiSubTab.Create("LIMITED-ENTRY", tabApplication.UiTabId);
+
+        var packageTab1 = UiSubTab.Create("Big Game", tabPackage.UiTabId);
+        var packageTab2 = UiSubTab.Create("Antlerless", tabPackage.UiTabId);
 
         if (!context.UiTabs.Any())
         {
             context.UiTabs.AddRange(new List<UiTab>
             {
-                tab
+                tabApplication, tabPackage
             });
 
             context.UiSubTabs.AddRange(new List<UiSubTab>
             {
-                subTab1,
-                subTab2
+                appTab1,
+                appTab2,
+                packageTab1,
+                packageTab2
             });
         }
 
         if (!context.RootItemNumbers.Any())
         {
-            var bg = RootItemNumber.Create("1000", "Big Game Draw");
-            var bg2 = RootItemNumber.Create("1100", "Big Game Application");
-            var bg3 = RootItemNumber.Create("1101", "Big Game - GS - Buck Deer");
-            var bg4 = RootItemNumber.Create("1103", "Big Game - LE - Buck Deer");
+            var bgDraw = RootItemNumber.Create("1000", "Big Game Draw");
+            var bgApplication = RootItemNumber.Create("1100", "Big Game Application");
+            var bgGS = RootItemNumber.Create("1101", "Big Game - GS - Buck Deer");
+            var bgLE = RootItemNumber.Create("1103", "Big Game - LE - Buck Deer");
+
+            var anDraw = RootItemNumber.Create("2000", "Antlerless Draw");
 
             context.RootItemNumbers.AddRange(new List<RootItemNumber>
             {
-                bg, bg2, bg3, bg4
+                bgDraw, bgApplication, bgGS, bgLE,
+                anDraw
             });
 
             context.Items.AddRange(new List<Item>
             {
-                Item.Create(2026, "GS01", bg3.RootItemNumberId, tab.UiTabId, subTab1.UiSubTabId),
-                Item.Create(2026, "LE01", bg4.RootItemNumberId, tab.UiTabId, subTab1.UiSubTabId)
+                Item.Create(2026, "1000", bgDraw.RootItemNumberId, tabPackage.UiTabId, packageTab1.UiSubTabId),
+                Item.Create(2026, "GS01", bgGS.RootItemNumberId, tabApplication.UiTabId, appTab1.UiSubTabId),
+                Item.Create(2026, "LE01", bgLE.RootItemNumberId, tabApplication.UiTabId, appTab1.UiSubTabId),
+
+                Item.Create(2026, "2000", anDraw.RootItemNumberId, tabPackage.UiTabId, packageTab2.UiSubTabId)
             });
         }
 
