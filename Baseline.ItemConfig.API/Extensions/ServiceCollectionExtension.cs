@@ -1,6 +1,8 @@
-﻿using Baseline.Common.Extensions;
+﻿using AutoMapper;
+using Baseline.Common.Extensions;
 using Baseline.Common.Uow.Abstractions;
 using Baseline.ItemConfig.Application;
+using Baseline.ItemConfig.Application.MappingProfiles;
 using Baseline.ItemConfig.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +23,10 @@ namespace Baseline.ItemConfig.API.Extensions
                 options.UseSqlServer(cs);
             });
 
+            services.AddAutoMapper(typeof(ItemConfigMappingProfile));
+
             services.AddScoped<IBaseDbContext, ItemConfigDbContext>();
-            services.RegisterUowRepository();    
+            services.RegisterUowRepository();
             services.AddScoped<MasterHuntTypeService>();
             services.AddScoped<HuntTypeLicenseYearService>();
             services.AddScoped<OutletTypeService>();

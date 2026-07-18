@@ -1,3 +1,4 @@
+using AutoMapper;
 using Baseline.Common.Uow.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
 using Baseline.ItemConfig.Domain;
@@ -9,21 +10,24 @@ public class OutletService
     private readonly IUnitOfWork _uow;
     private readonly IRepository<Outlet> _outletRepository;
     private readonly IRepository<OutletType> _outletTypeRepository;
+    private readonly IMapper _mapper;
 
     public OutletService(
         IUnitOfWork uow,
         IRepository<Outlet> outletRepository,
-        IRepository<OutletType> outletTypeRepository)
+        IRepository<OutletType> outletTypeRepository,
+        IMapper mapper)
     {
         _uow = uow;
         _outletRepository = outletRepository;
         _outletTypeRepository = outletTypeRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<OutletReadDto>> GetAll()
     {
         var items = await _outletRepository.GetAll();
-        return items.Select(x => new OutletReadDto(x.OutletId, x.Name, x.OutletTypeId));
+        return _mapper.Map<IEnumerable<OutletReadDto>>(items);
     }
 
     public async Task<OutletReadDto> Create(string name, Guid outletTypeId)
@@ -37,7 +41,7 @@ public class OutletService
         var item = Outlet.Create(name, outletTypeId);
         _outletRepository.Add(item);
         await _uow.SaveChangesAsync();
-        return new OutletReadDto(item.OutletId, item.Name, item.OutletTypeId);
+        return _mapper.Map<OutletReadDto>(item);
     }
 
     public async Task<bool> Delete(Guid outletId)

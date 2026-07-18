@@ -1,3 +1,4 @@
+using AutoMapper;
 using Baseline.Common.Uow.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
 using Baseline.ItemConfig.Domain;
@@ -10,23 +11,26 @@ public class OutletTypeItemService
     private readonly IRepository<OutletTypeItem> _outletTypeItemRepository;
     private readonly IRepository<OutletType> _outletTypeRepository;
     private readonly IRepository<Item> _itemRepository;
+    private readonly IMapper _mapper;
 
     public OutletTypeItemService(
         IUnitOfWork uow,
         IRepository<OutletTypeItem> outletTypeItemRepository,
         IRepository<OutletType> outletTypeRepository,
-        IRepository<Item> itemRepository)
+        IRepository<Item> itemRepository,
+        IMapper mapper)
     {
         _uow = uow;
         _outletTypeItemRepository = outletTypeItemRepository;
         _outletTypeRepository = outletTypeRepository;
         _itemRepository = itemRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<OutletTypeItemReadDto>> GetAll()
     {
         var items = await _outletTypeItemRepository.GetAll();
-        return items.Select(x => new OutletTypeItemReadDto(x.OutletTypeItemId, x.OutletTypeId, x.ItemId));
+        return _mapper.Map<IEnumerable<OutletTypeItemReadDto>>(items);
     }
 
     public async Task<OutletTypeItemReadDto> Create(Guid outletTypeId, Guid itemId)
@@ -46,7 +50,7 @@ public class OutletTypeItemService
         var outletTypeItem = OutletTypeItem.Create(outletTypeId, itemId);
         _outletTypeItemRepository.Add(outletTypeItem);
         await _uow.SaveChangesAsync();
-        return new OutletTypeItemReadDto(outletTypeItem.OutletTypeItemId, outletTypeItem.OutletTypeId, outletTypeItem.ItemId);
+        return _mapper.Map<OutletTypeItemReadDto>(outletTypeItem);
     }
 
     public async Task<bool> Delete(Guid outletTypeItemId)

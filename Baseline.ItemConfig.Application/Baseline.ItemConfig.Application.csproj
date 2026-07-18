@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Baseline.ItemConfig.Domain\Baseline.ItemConfig.Domain.csproj" />
     <ProjectReference Include="..\Baseline.ItemConfig.Infrastructure\Baseline.ItemConfig.Infrastructure.csproj" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Baseline.Common.Uow.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
 using Baseline.ItemConfig.Domain;
@@ -8,17 +9,19 @@ public class RootItemNumberService
 {
     private readonly IUnitOfWork _uow;
     private readonly IRepository<RootItemNumber> _rootItemNumberRepository;
+    private readonly IMapper _mapper;
 
-    public RootItemNumberService(IUnitOfWork uow, IRepository<RootItemNumber> rootItemNumberRepository)
+    public RootItemNumberService(IUnitOfWork uow, IRepository<RootItemNumber> rootItemNumberRepository, IMapper mapper)
     {
         _uow = uow;
         _rootItemNumberRepository = rootItemNumberRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<RootItemNumberReadDto>> GetAll()
     {
         var items = await _rootItemNumberRepository.GetAll();
-        return items.Select(x => new RootItemNumberReadDto(x.RootItemNumberId, x.Number, x.Description));
+        return _mapper.Map<IEnumerable<RootItemNumberReadDto>>(items);
     }
 
     public async Task<RootItemNumberReadDto> Create(string rootItemNumber, string rootItemDescription)
@@ -26,7 +29,7 @@ public class RootItemNumberService
         var item = RootItemNumber.Create(rootItemNumber, rootItemDescription);
         _rootItemNumberRepository.Add(item);
         await _uow.SaveChangesAsync();
-        return new RootItemNumberReadDto(item.RootItemNumberId, item.Number, item.Description);
+        return _mapper.Map<RootItemNumberReadDto>(item);
     }
 
     public async Task<bool> Delete(Guid rootItemNumberId)

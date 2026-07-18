@@ -1,3 +1,4 @@
+using AutoMapper;
 using Baseline.Common.Uow.Abstractions;
 using Baseline.ItemConfig.Application.DTOs;
 using Baseline.ItemConfig.Domain;
@@ -9,15 +10,18 @@ public class HuntTypeLicenseYearService
     private readonly IUnitOfWork _uow;
     private readonly IRepository<HuntTypeLicenseYear> _licenseYearRepository;
     private readonly IRepository<MasterHuntType> _mhtRepository;
+    private readonly IMapper _mapper;
 
     public HuntTypeLicenseYearService(
         IUnitOfWork uow,
         IRepository<HuntTypeLicenseYear> licenseYearRepository,
-        IRepository<MasterHuntType> mhtRepository)
+        IRepository<MasterHuntType> mhtRepository,
+        IMapper mapper)
     {
         _uow = uow;
         _licenseYearRepository = licenseYearRepository;
         _mhtRepository = mhtRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<HuntTypeLicenseYearReadDto>> GetAll(Guid? masterHuntTypeId)
@@ -28,12 +32,7 @@ public class HuntTypeLicenseYearService
             items = items.Where(x => x.MasterHuntTypeId == masterHuntTypeId.Value).ToList();
         }
 
-        return items.Select(x => new HuntTypeLicenseYearReadDto(
-            x.Id,
-            x.MasterHuntTypeId,
-            x.Year,
-            x.StartDate,
-            x.EndDate));
+        return _mapper.Map<IEnumerable<HuntTypeLicenseYearReadDto>>(items);
     }
 
     public async Task<HuntTypeLicenseYearReadDto> Create(Guid masterHuntTypeId, int year, DateTime startDate, DateTime endDate)
@@ -48,12 +47,7 @@ public class HuntTypeLicenseYearService
         _licenseYearRepository.Add(item);
         await _uow.SaveChangesAsync();
 
-        return new HuntTypeLicenseYearReadDto(
-            item.Id,
-            item.MasterHuntTypeId,
-            item.Year,
-            item.StartDate,
-            item.EndDate);
+        return _mapper.Map<HuntTypeLicenseYearReadDto>(item);
     }
 
     public async Task<bool> Delete(Guid id)
