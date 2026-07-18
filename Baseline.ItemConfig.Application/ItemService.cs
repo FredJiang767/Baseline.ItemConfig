@@ -57,7 +57,7 @@ public class ItemService
             throw new InvalidOperationException("UiSubTab and UiTab relationship does not match.");
         }
 
-        var item = Item.Create(itemYear, itemNumber, rootItemNumberId, uiSubTabId, uiTabId);
+        var item = Item.Create(itemYear, itemNumber, rootItemNumberId, uiTabId, uiSubTabId);
         _itemRepository.Add(item);
         await _uow.SaveChangesAsync();
         return new ItemReadDto(item.ItemId, item.ItemYear, item.ItemNumber, item.RootItemNumberId, item.UiTabId, item.UiSubTabId);
