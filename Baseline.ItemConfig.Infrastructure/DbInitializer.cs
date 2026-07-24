@@ -8,33 +8,15 @@ public static class DbInitializer
     {
         context.Database.EnsureCreated();
 
-        if (!context.MasterHuntTypes.Any())
-        {
-            context.MasterHuntTypes.AddRange(new List<MasterHuntType>
-            {
-                MasterHuntType.Create("Sports Man"),
-                MasterHuntType.Create("Big Game")
-            });
-        }
+        InitMasterHuntType(context);
+        InitOutlets(context);
+        InitItem(context);
 
-        if (!context.OutletTypes.Any())
-        {
-            var internet = OutletType.Create("Internet");
-            var telephone = OutletType.Create("Telephone");
+        context.SaveChanges();
+    }
 
-            context.OutletTypes.AddRange(new List<OutletType>
-            {
-                internet,
-                telephone
-            });
-
-            context.Outlets.AddRange(new List<Outlet>
-            {
-                Outlet.Create("Internet Outlet", internet.OutletTypeId),
-                Outlet.Create("Telephone Outlet", telephone.OutletTypeId),
-            });
-        }
-
+    private static void InitItem(ItemConfigDbContext context)
+    {
         var tabApplication = UiTab.Create("Applications");
         var tabPackage = UiTab.Create("Package");
 
@@ -84,7 +66,45 @@ public static class DbInitializer
                 Item.Create(2026, "2000", anDraw.RootItemNumberId, tabPackage.UiTabId, packageTab2.UiSubTabId)
             });
         }
+    }
 
-        context.SaveChanges();
+    private static void InitMasterHuntType(ItemConfigDbContext context)
+    {
+        var sportsMan = MasterHuntType.Create("Sports Man");
+        var bigGame = MasterHuntType.Create("Big Game");
+
+        if (!context.MasterHuntTypes.Any())
+        {
+            context.MasterHuntTypes.AddRange(new List<MasterHuntType>
+            {
+                sportsMan, bigGame
+            });
+
+            context.HuntTypeLicenseYears.AddRange(new List<HuntTypeLicenseYear>
+            {
+                //HuntTypeLicenseYear.Create(sportsMan.Id, 2026),
+            });
+        }
+    }
+
+    private static void InitOutlets(ItemConfigDbContext context)
+    {
+        if (!context.OutletTypes.Any())
+        {
+            var internet = OutletType.Create("Internet");
+            var telephone = OutletType.Create("Telephone");
+
+            context.OutletTypes.AddRange(new List<OutletType>
+            {
+                internet,
+                telephone
+            });
+
+            context.Outlets.AddRange(new List<Outlet>
+            {
+                Outlet.Create("Internet Outlet", internet.OutletTypeId),
+                Outlet.Create("Telephone Outlet", telephone.OutletTypeId),
+            });
+        }
     }
 }
